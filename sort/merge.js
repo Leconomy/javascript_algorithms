@@ -38,7 +38,7 @@ function __merge(arr, left, mid, right) {
 		} else if (aux[i - left] > aux[j - left]) {
 			arr[k] = aux[j - left];
 			j++;
-		} else if (aux[i - left] < aux[j - left]) {
+		} else {
 			arr[k] = aux[i - left];
 			i++;
 		}
