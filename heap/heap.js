@@ -1,4 +1,4 @@
-const arr = require('./arr');
+
  /** 
   * 最大堆的特点
   * 1、堆中某个节点的值总是不大于其父节点的值
@@ -14,7 +14,7 @@ const arr = require('./arr');
 function swap(arr, i , j) {
 	[arr[i], arr[j]] = [arr[j], arr[i]];
 }
-class MaxHeap {
+module.exports = class MaxHeap {
     constructor(capacity) {
         // 存储空间
         this.heap = new Array(capacity + 1);
@@ -77,35 +77,35 @@ class MaxHeap {
     }
 
     shiftDown(k) {
-        let left = 2 * k;
-        let right = 2 * k + 1;
-        if (right > this.count) {
-            return;
-        }
-        if (this.heap[left] > this.heap[right]) {
-            if (this.heap[k] < this.heap[right]) {
-                swap(this.heap, left, k);
-                this.shiftDown(left);
+        // let left = 2 * k;
+        // let right = 2 * k + 1;
+        // if (right > this.count) {
+        //     return;
+        // }
+        // // 如果考察大节点比左侧或右侧其中任意一个大，都需要交换
+        // if (this.heap[right] > this.heap[k] || this.heap[left] > this.heap[k]) {
+        //     // 左侧大 与左侧交换
+        //     if (this.heap[left] > this.heap[right]) {
+        //         swap(this.heap, left, k);
+        //         this.shiftDown(left);
+        //     } else {
+        //         swap(this.heap, right, k);
+        //         this.shiftDown(right);
+        //     }
+        // }
+        while(2 * k <= this.count) {
+            // k与j即将交换
+            let j = 2 * k;
+            // 有右侧节点且右侧节点比左节点大
+            if (this.count >= j + 1 && this.heap[j + 1] > this.heap[j]) {
+                j++;
             }
-        } else {
-            if (this.heap[k] < this.heap[left]) {
-
-                swap(this.heap, right, k);
-                this.shiftDown(right);
+            if (this.heap[k] > this.heap[j]) {
+                break;
             }
+            swap(this.heap, k, j);
+            k = j;
         }
-
     }
 }
 
-const heap = new MaxHeap(arr.length - 1);
-
-for (let i = 0; i < arr.length; i++) {
-    heap.insert(arr[i]);
-}
-
-
-
-console.log(heap.heap);
-heap.extractMax();
-console.log(heap.heap);
